@@ -77,33 +77,34 @@
 			$this->FetchData($array);
 		}
 
-		public function FetchData($array){
+		public function FetchData($array){			
 			//Recorriendo las columnas de ambos archivos
-			$x=1;
-			for($a=2;$a<=count($array['data1']['column_1']);$a++){
-				//Se guarda en una variable el valor de la celda a comparar
-				$cargo_ut = $array['data1']['column_1'][$a];				
-				for($b=1;$b<=count($array['data2']['column_1']);$b++){
-					$cargo_ba1[$x] = $array['data2']['column_1'][$b];
-					$cargo_ba2 = $array['data2']['column_2'][$b];
-					$cargo_ba3 = $array['data2']['column_3'][$b];
-					$cargo_ba4 = $array['data2']['column_4'][$b];
-					echo $cargo_ut;
-					echo "<br>";
-					//echo $cargo_ba1[$x];
-					//echo "<br>";
-					// if($cargo_ba1[$x]==$cargo_ut){
-					// 	//echo $cargo_ba1[$x]."==".$cargo_ut;
-					// 	//echo "<br>";
-					// 	unset($cargo_ba1[$x]);
-					// }else{
-					// 	//echo $cargo_ba1[$x]."==".$cargo_ut;
-					// 	//echo "<br>";
-					// }
-					$x++;
-				}
+			
+			for($b=1;$b<count($array['data2']['column_1']);$b++){
+				$cargo_ba1 = intval($array['data2']['column_1'][$b]);
+				$cargo_ba2 = $array['data2']['column_2'][$b];
+				$cargo_ba3 = $array['data2']['column_3'][$b];
+				$cargo_ba4 = $array['data2']['column_4'][$b];	
 			}
-			//var_dump($cargo_ba1);
+
+			for($a=1;$a<count($array['data1']['column_1']);$a++){
+				//Se guarda en una variable el valor de la celda a comparar
+				$cargo_ut = intval($array['data1']['column_1'][$a]);
+				
+
+				for($c=1;$c<count($array['data2']['column_1']);$c++){
+					if($cargo_ba1[$c]!=$cargo_ut){
+
+					}else{
+						unset($cargo_ba1[$c]);
+					}
+				}
+
+
+			}
+			print_r($cargo_ba1);
+			echo "---------------------------";
+			//print_r($arrayn);
 		}		
 	}
 ?>
