@@ -5,14 +5,35 @@
 
 	class ConciliacionController extends BaseController{
 
+		protected $helpers = ['form'];
+
 		public function Conciliacion(){
 			$data = array("foo"=>"bar");
 			return view('conciliacion',array("data"=>$data));
 		}
 
-		public function SendData(){			
+		public function SendData(){
+		
+			if(!$this->request->is('post')) {
+            	return view('/conciliacion');
+	        }
+
+    		//$validation =  \Config\Services::validation();
+    		//$validation->setRule('file1' => 'uploaded[file1]|ext_in[file1,xlsx]');
+			//!$validation->withRequest($this->request)->run()
+
+	        $rules = [
+	        	'file1' => 'uploaded[file1]|ext_in[file1,xlsx]',
+	        	'file2' => 'uploaded[file2]|ext_in[file2,xlsx]'
+	     	];
+
+	        if (!$this->validate($rules)) {
+	            return view('/conciliacion');
+	        }
+	        
 			$ut = $_FILES['file1']['tmp_name'];
 			$ba = $_FILES['file2']['tmp_name'];
+			
 			$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
 			$reader->setReadDataOnly(true);
             ###
@@ -78,36 +99,6 @@
 							"column_5"=>$column_5);
 		}
 
-<<<<<<< HEAD
-		public function FetchData($array){			
-			//Recorriendo las columnas de ambos archivos
-			
-			for($b=1;$b<count($array['data2']['column_1']);$b++){
-				$cargo_ba1 = intval($array['data2']['column_1'][$b]);
-				$cargo_ba2 = $array['data2']['column_2'][$b];
-				$cargo_ba3 = $array['data2']['column_3'][$b];
-				$cargo_ba4 = $array['data2']['column_4'][$b];	
-			}
-
-			for($a=1;$a<count($array['data1']['column_1']);$a++){
-				//Se guarda en una variable el valor de la celda a comparar
-				$cargo_ut = intval($array['data1']['column_1'][$a]);
-				
-
-				for($c=1;$c<count($array['data2']['column_1']);$c++){
-					if($cargo_ba1[$c]!=$cargo_ut){
-
-					}else{
-						unset($cargo_ba1[$c]);
-					}
-				}
-
-
-			}
-			print_r($cargo_ba1);
-			echo "---------------------------";
-			//print_r($arrayn);
-=======
 		public function FetchData($array){
 			$x=1;			
 			
@@ -162,7 +153,8 @@
 				default:
 					# code...
 					break;
-			}			
+			}
+
 			foreach ($array1 as $key1 => $value1) {
 				foreach($array2 as $key2 => $value2){
 					if($array1[$key1]==$value2){
@@ -173,19 +165,16 @@
 					}
 				}		
 			}
-			var_dump($array2);
-			echo "<br>";
-			echo "<br>";
-			var_dump($array3);
-			echo "<br>";
-			echo "<br>";
-			var_dump($array4);
-			echo "<br>";
-			echo "<br>";
-			var_dump($array5);
-			echo "<br>";
-			echo "<br>";
->>>>>>> 6f4e459fe589f11dcb2fd9e96b0cca6d6d8ea347
-		}		
+		
+			$datos = array("data1"=>$array2,
+				"data2"=>$array3,
+				"data3"=>$array4,
+				"data4"=>$array5);	
+			print_r($datos);
+		}
+
+
+		//return redirect()->to(base_url('../'))->with('msg', 'You are not allowed to access that category.');
+		//return view('drawlayout',array("datos"=>$datos));	
 	}
 ?>

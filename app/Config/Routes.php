@@ -16,8 +16,7 @@ $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 /*New routes to conciliation controller*/
-//$routes->get('conciliacion','ConciliacionController::Conciliacion');
-/*To send form (upload) it serves as view*/    
+//$routes->get('conciliacion','ConciliacionController::Conciliacion');   
 $routes->post('upload','ConciliacionController::SendData');    
 /**/
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
