@@ -13,41 +13,44 @@
 		}
 
 		public function SendData(){
-		
-			if(!$this->request->is('post')) {
-            	return view('/conciliacion');
-	        }
 
-    		//$validation =  \Config\Services::validation();
-    		//$validation->setRule('file1' => 'uploaded[file1]|ext_in[file1,xlsx]');
-			//!$validation->withRequest($this->request)->run()
+			if($this->request->is('post')){              	      
+	    		//$validation =  \Config\Services::validation();
+	    		//$validation->setRule('file1' => 'uploaded[file1]|ext_in[file1,xlsx]');
+				//!$validation->withRequest($this->request)->run()
 
-	        $rules = [
-	        	'file1' => 'uploaded[file1]|ext_in[file1,xlsx]',
-	        	'file2' => 'uploaded[file2]|ext_in[file2,xlsx]'
-	     	];
+		        $rules = [
+		        	'file1' => 'uploaded[file1]|ext_in[file1,xlsx]',
+		        	'file2' => 'uploaded[file2]|ext_in[file2,xlsx]'
+		     	];
 
-	        if (!$this->validate($rules)) {
-	            return view('/conciliacion');
-	        }
-	        
-			$ut = $_FILES['file1']['tmp_name'];
-			$ba = $_FILES['file2']['tmp_name'];
-			
-			$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
-			$reader->setReadDataOnly(true);
-            ###
-			$data1 = $this->GetDatosUt(array("file"=>$ut,"reader"=>$reader));
-			$data2 = $this->GetDatosBa(array("file"=>$ba,"reader"=>$reader));
-			//Recorrer el total de procesos a mostrar(4)
-			for($i=1;$i<=4;$i++){
-	            $this->FetchData(
-									array(
-											"data1"	=>	$data1,
-											"data2"	=>	$data2,
-											"opciones" => $i)
-										);
+		        if($this->validate($rules)){
+		            
+		      		$ut = $_FILES['file1']['tmp_name'];
+					$ba = $_FILES['file2']['tmp_name'];
+
+					$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
+					$reader->setReadDataOnly(true);
+		            ###
+					$data1 = $this->GetDatosUt(array("file"=>$ut,"reader"=>$reader));
+					$data2 = $this->GetDatosBa(array("file"=>$ba,"reader"=>$reader));
+					//Recorrer el total de procesos a mostrar(4)
+					for($i=1;$i<=4;$i++){
+			            $this->FetchData(
+											array(
+													"data1"	=>	$data1,
+													"data2"	=>	$data2,
+													"opciones" => $i)
+												);
+					}
+				}else{
+					$data['validation'] = $this->validator;
+		            return view('/conciliacion',$data);
+				}
+			}else{
+				return view('/conciliacion');
 			}
+
 		}
 
 		public function GetDatosUt($array){
