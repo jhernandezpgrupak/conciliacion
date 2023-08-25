@@ -2,6 +2,7 @@
 	namespace App\Controllers;
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
 	use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+	//use App\Controllers\Admin\SomeClass as ...
 
 	class ConciliacionController extends BaseController{
 
@@ -12,7 +13,12 @@
 			return view('conciliacion',array("data"=>$data));
 		}
 
-		public function SendData(){
+
+		public function xlsx($type = '.xlsx', $name = 'Banco'){
+			echo 'File is a type ' .$type .' and his name is '.$name;
+		}
+
+		public function SendData(/*$args*/){//Argumentos
 
 			if($this->request->is('post')){              	      
 	    		//$validation =  \Config\Services::validation();
@@ -44,6 +50,7 @@
 												);
 					}
 				}else{
+					$data=[];
 					$data['validation'] = $this->validator;
 		            return view('/conciliacion',$data);
 				}

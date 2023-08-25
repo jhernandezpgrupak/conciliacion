@@ -6,8 +6,8 @@
 	<input type="file" name="file2" id="file2" accept=".xlsx">
 	<button>Send</button>
 	<?php 
-	if(isset($validation)){
-		echo "file not success";
-	} 
+		if(isset($validation)){
+			echo '<div class="alert alert-danger">Por favor, verifique los archivos.</div>';
+		} 
 	?>	
 <?= form_close(); ?> 
