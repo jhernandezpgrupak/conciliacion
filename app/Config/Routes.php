@@ -16,7 +16,7 @@ $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 /*New routes to conciliation controller*/
-//$routes->get('conciliacion','ConciliacionController::Conciliacion');   
+//$routes->get('conciliacion','ConciliacionControlle  r::Conciliacion');   
 $routes->post('upload','ConciliacionController::SendData'); 
 //Parametros en los url's   
 $routes->add('xlsx/(:any)/','ConciliacionController::xlsx/$1/$2');
@@ -30,6 +30,8 @@ $routes->group('admin', function ($routes){
     $routes->add('users','Admin\Users::getAllUsers');
     $routes->add('xlsx/(:any)/','ConciliacionController::xlsx/$1/$2');
 });
+//Probando la clase creada.
+$routes->get('Index','ConciliacionController::Index');
 /**/
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
 // where controller filters or CSRF protection are bypassed.

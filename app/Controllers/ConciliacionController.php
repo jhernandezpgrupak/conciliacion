@@ -3,8 +3,16 @@
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
 	use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 	//use App\Controllers\Admin\SomeClass as ...
+	use App\Controllers\Datos as MisDatos;
 
 	class ConciliacionController extends BaseController{
+
+		public function Index(){
+			$return = new MisDatos();
+			$return->setTitle('Titulo...');
+			$title = $return->getTitle();
+			print_r($title);
+		}
 
 		protected $helpers = ['form'];
 
